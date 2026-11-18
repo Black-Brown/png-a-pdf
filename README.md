@@ -1,33 +1,58 @@
 # PNG a PDF
 
-Aplicación de escritorio en español para Windows que convierte una carpeta de imágenes PNG en un solo PDF. Funciona localmente, sin subir tus imágenes a internet.
+<img src="assets/app.png" alt="Icono de PNG a PDF" width="88">
 
-## Usar la aplicación
+Convierte una carpeta de imágenes PNG en un solo PDF desde una aplicación de escritorio en español. Revisa las imágenes, ajusta el orden de las páginas y guarda el documento en tu equipo.
 
-No necesitas instalar Python. Abre **`app/PNG a PDF.exe`** con doble clic o usa `ABRIR.bat`.
+**Versión actual: 1.2.0 · Windows 10 y Windows 11 de 64 bits (x64).**
 
-1. Pulsa **Seleccionar carpeta**.
+## Descargar y abrir
+
+No necesitas instalar Python para utilizar los ejecutables incluidos:
+
+- **[Instalador 1.2.0](instalador/PNG-a-PDF-Setup-1.2.0.exe):** asistente en español, acceso desde Inicio, acceso directo opcional y desinstalador. Se instala para el usuario actual, sin solicitar permisos de administrador.
+- **[Aplicación portátil](app/PNG%20a%20PDF.exe):** abre el archivo con doble clic o utiliza `ABRIR.bat`.
+
+Si descargas el repositorio como ZIP, extrae los archivos antes de ejecutarlos. Las sumas de verificación están en `app/SHA256SUMS.txt` e `instalador/SHA256SUMS.txt`. El repositorio conserva únicamente el instalador de la versión actual.
+
+## Cómo funciona
+
+1. Pulsa **Elegir carpeta** y selecciona tus imágenes PNG.
 2. Activa **Incluir subcarpetas** si lo necesitas.
-3. Revisa el orden de las imágenes. Selecciona una y usa **Subir** o **Bajar** para cambiar su posición.
-4. Pulsa **Guardar PDF** y selecciona el destino.
+3. Selecciona una imagen para verla en el panel de vista previa.
+4. Haz **doble clic** en la lista o en la vista previa para abrirla en una ventana grande. También puedes pulsar **Enter** sobre la imagen seleccionada; cierra la ventana con **Esc**.
+5. Cambia el orden con **Subir** y **Bajar**.
+6. Pulsa **Exportar PDF** y elige dónde guardarlo.
 
-El ejecutable incluido es para Windows de 64 bits. Puedes copiarlo a otra carpeta y usarlo por separado. Al descargar este repositorio como ZIP, extrae los archivos antes de abrir la aplicación.
+Atajos: **Ctrl+O** para seleccionar carpeta y **Ctrl+S** para exportar.
 
 ## Funciones
 
-- Detecta PNG y PNG con extensión en mayúsculas.
-- Ordena los nombres numéricamente: 1, 2, 3… 10.
-- Incluye subcarpetas opcionalmente.
-- Permite cambiar el orden de las páginas.
-- Conserva las proporciones y aplica la orientación EXIF.
-- Convierte la transparencia a fondo blanco.
-- Informa si una imagen está dañada y conserva el PDF de destino anterior si falla la conversión.
+- Detección de archivos `.png` y `.PNG`, con orden numérico por nombre.
+- Inclusión opcional de subcarpetas y orden manual de páginas.
+- Vista previa con dimensiones, tamaño y número de página.
+- Ventana ampliada redimensionable, sin perder la vista previa lateral.
+- Icono propio de imagen y documento PDF en la aplicación y el instalador.
+- Conservación de proporciones y aplicación de la orientación EXIF.
+- Transparencia convertida a fondo blanco.
+- Procesamiento local, sin cuentas, anuncios ni envío de imágenes a servidores.
+- Avisos de archivos dañados; si falla la conversión, se conserva el PDF de destino anterior.
 
 Cada archivo corresponde a una página. En PNG animados se usa la primera imagen. No incluye OCR. Las imágenes se cargan en memoria, por lo que las carpetas muy grandes pueden requerir convertir por grupos.
 
+## Novedades de 1.2.0
+
+La versión actual incorpora la ventana ampliada con doble clic y el nuevo icono. Incluye también el diseño moderno y la vista previa introducidos anteriormente. Consulta el historial de cambios en [CHANGELOG.md](CHANGELOG.md).
+
+## Seguridad y privacidad
+
+La aplicación y el instalador todavía no tienen firma digital. Un instalador no elimina avisos de Windows ni sustituye una revisión de una detección antivirus. No se recomienda desactivar las protecciones para ejecutarlo.
+
+Consulta la [política de privacidad](PRIVACIDAD.md) y los [detalles de instalación](INSTALACION.md). La suma SHA-256 sirve para comprobar integridad; no sustituye una firma digital.
+
 ## Ejecutar desde el código
 
-Requiere Python 3.10 o superior con Tcl/Tk. En Windows, instala Python con la opción de agregarlo al PATH y el componente Tcl/Tk.
+Requiere Python 3.10 o superior con Tcl/Tk. En Windows, agrega Python al PATH e incluye el componente Tcl/Tk durante su instalación.
 
 ```powershell
 python -m venv .venv
@@ -35,43 +60,37 @@ python -m venv .venv
 .\.venv\Scripts\python.exe png_a_pdf.py
 ```
 
-## Generar un nuevo ejecutable
-
-En Windows, ejecuta `GENERAR_EXE.bat`. Crea un entorno virtual, instala las herramientas, ejecuta las pruebas, genera el ejecutable con PyInstaller y actualiza la copia de `app/` y su suma SHA-256.
-
-Para hacerlo manualmente:
+## Pruebas
 
 ```powershell
 .\.venv\Scripts\python.exe -m pip install -r requirements-dev.txt
 .\.venv\Scripts\python.exe -m unittest discover -s tests -v
-.\.venv\Scripts\python.exe -m PyInstaller --noconfirm --clean --onefile --windowed --exclude-module numpy --name "PNG a PDF" png_a_pdf.py
 ```
 
-El archivo generado queda en `dist/PNG a PDF.exe`. Copia esa versión a `app/` si deseas incluirla en el repositorio.
-
-## Archivos del proyecto
-
-| Archivo | Contenido |
-| --- | --- |
-| `png_a_pdf.py` | Ventana de la aplicación |
-| `_image_pdf.py` | Lectura de imágenes y generación de PDF |
-| `app/PNG a PDF.exe` | Aplicación portátil lista para usar |
-| `app/SHA256SUMS.txt` | Suma de verificación del ejecutable |
-| `tests/` | Pruebas de conversión |
-| `GENERAR_EXE.bat` | Generación del ejecutable en Windows |
-| `.github/workflows/build.yml` | Pruebas y compilación automática en GitHub |
-
-## Publicar en GitHub
-
-Este proyecto ya es un repositorio Git local. Para publicarlo, crea en GitHub un repositorio vacío llamado `png-a-pdf`, sin README ni licencia automática. Desde esta carpeta ejecuta, sustituyendo `TU_USUARIO`:
+Para comprobar el doble clic y la ventana ampliada con una sesión gráfica disponible:
 
 ```powershell
-git remote add origin https://github.com/TU_USUARIO/png-a-pdf.git
-git push -u origin main
+.\.venv\Scripts\python.exe tests/check_viewer.py
 ```
 
-En GitHub puedes crear una **Release** `v1.0.0` y adjuntar `app/PNG a PDF.exe` y `app/SHA256SUMS.txt`. La compilación automática también deja un ejecutable descargable en los artefactos de cada ejecución de Actions.
+## Generar ejecutables
 
-## Licencia y dependencias
+- **`GENERAR_EXE.bat`:** instala las dependencias de desarrollo, ejecuta las pruebas y reconstruye la aplicación portátil con el icono y los metadatos de versión. Actualiza `app/` y su suma de verificación.
+- **`GENERAR_INSTALADOR.bat`:** requiere Inno Setup 6 y genera `instalador/PNG-a-PDF-Setup-1.2.0.exe`. Reconstruye primero el ejecutable si cambiaste el código. El script de instalación está en `installer/PNG-a-PDF.iss`.
+- **GitHub Actions:** `.github/workflows/build.yml` ejecuta las pruebas y genera el ejecutable portátil como artefacto descargable.
 
-Distribuido bajo licencia MIT; consulta `LICENSE`. El ejecutable integra Python, Tcl/Tk y Pillow, sujetos a sus propias licencias. PyInstaller se utiliza para empaquetar la aplicación con su excepción para distribución de ejecutables. Consulta `THIRD_PARTY_NOTICES.md`.
+Para distribuir una versión desde GitHub Releases, adjunta la aplicación portátil o el instalador y la suma SHA-256 correspondiente.
+
+## Microsoft Store
+
+La preparación de MSIX está en [store/LEEME.md](store/LEEME.md). Incluye la ficha en español, los iconos y una plantilla de identidad de Partner Center.
+
+`GENERAR_MSIX.bat` requiere Windows SDK y los datos exactos de `store/identity.json`. La cuenta debe usar el flujo **MSIX o PWA** para ese paquete; el producto reservado como **EXE o MSI** utiliza otro flujo. El nombre reservado comunicado para Store es **IMG TO PDF CONVERTER**; la identidad MSIX definitiva sigue pendiente.
+
+La preparación local no significa que la aplicación esté publicada o certificada. Faltan confirmar la identidad, probar el paquete instalado, preparar las capturas y completar la revisión de Store.
+
+## Código y licencia
+
+`png_a_pdf.py` contiene la interfaz y `_image_pdf.py` la conversión. Los recursos del icono están en `assets/`; `tools/generate_icon.py` permite regenerarlos en Windows.
+
+Licencia MIT: consulta [LICENSE](LICENSE). Python, Tcl/Tk, Pillow y PyInstaller tienen sus propias condiciones, indicadas en [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).

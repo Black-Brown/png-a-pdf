@@ -12,7 +12,7 @@ if errorlevel 1 exit /b 1
 if errorlevel 1 exit /b 1
 ".venv\Scripts\python.exe" -m unittest discover -s tests -v
 if errorlevel 1 exit /b 1
-".venv\Scripts\python.exe" -m PyInstaller --noconfirm --clean --onefile --windowed --exclude-module numpy --name "PNG a PDF" png_a_pdf.py
+".venv\Scripts\python.exe" -m PyInstaller --noconfirm --clean --onefile --windowed --exclude-module numpy --icon assets/app.ico --add-data "assets;assets" --version-file version_info.txt --name "PNG a PDF" png_a_pdf.py
 if errorlevel 1 exit /b 1
 copy /y "dist\PNG a PDF.exe" "app\PNG a PDF.exe"
 if errorlevel 1 exit /b 1

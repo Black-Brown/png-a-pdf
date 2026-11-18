@@ -6,3 +6,6 @@ dist/
 *.spec
 .env
 .pytest_cache/
+
+/store/build/
+/store/dist/
