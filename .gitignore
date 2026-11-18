@@ -9,3 +9,6 @@ dist/
 
 /store/build/
 /store/dist/
+
+/hosting/public/
+/.vercel/

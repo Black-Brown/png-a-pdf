@@ -94,3 +94,11 @@ La preparación local no significa que la aplicación esté publicada o certific
 `png_a_pdf.py` contiene la interfaz y `_image_pdf.py` la conversión. Los recursos del icono están en `assets/`; `tools/generate_icon.py` permite regenerarlos en Windows.
 
 Licencia MIT: consulta [LICENSE](LICENSE). Python, Tcl/Tk, Pillow y PyInstaller tienen sus propias condiciones, indicadas en [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+
+## Descargas directas en Render o Vercel
+
+La guía está en [hosting/LEEME.md](hosting/LEEME.md). Para **Render**, elige **Static Site**, rama `main`, raíz vacía, Build Command `node hosting/build.mjs` y Publish Directory `hosting/public`. No se necesitan variables de entorno ni un servicio Python. También puedes crear un Blueprint a partir de `render.yaml`.
+
+Se conserva `vercel.json` como alternativa: preset **Other**, raíz `./`, el mismo comando de build y la misma carpeta de salida; el comando de instalación queda vacío.
+
+El build publica la aplicación portátil y el instalador bajo `/descargas/v1.2.0/`, sus sumas SHA-256 y la política de privacidad en `/privacidad.html`. Copia los archivos reales al sitio; no redirige a GitHub. Después de desplegar, verifica la URL pública, la respuesta HTTP 200 sin redirecciones y la suma del archivo descargado. La firma y los demás requisitos de Store siguen pendientes.

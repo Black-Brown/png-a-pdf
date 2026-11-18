@@ -1,0 +1,15 @@
+# Static downloads only: no Python service or background process.
+services:
+  - type: web
+    name: png-a-pdf-downloads
+    runtime: static
+    branch: main
+    buildCommand: node hosting/build.mjs
+    staticPublishPath: ./hosting/public
+    headers:
+      - path: /descargas/*
+        name: Content-Disposition
+        value: attachment
+      - path: /descargas/*
+        name: X-Content-Type-Options
+        value: nosniff
